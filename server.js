@@ -23,8 +23,8 @@ app.use('/',userRoute);
 app.use('/',pdfRoute);
 
 const PORT = process.env.PORT || 5000;
-// const DB_URI =process.env.MONGO_URI || "mongodb://localhost:27017/pdf-generator";
-const DB_URI ="mongodb://localhost:27017/pdf-generator";
+const DB_URI =process.env.MONGO_URI;
+// const DB_URI ="mongodb://localhost:27017/pdf-generator";
 console.log(DB_URI)
 
 mongoose.connect(DB_URI).then(() => {
