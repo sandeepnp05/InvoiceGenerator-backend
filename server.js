@@ -11,7 +11,8 @@ dotenv.config();
 const app = express();
 app.use(cors({
   origin: [
-    'https://invoice-generator-react-dj3m-fgchwc37c.vercel.app',
+    'https://invoice-generator-react-dj3m-fgchwc37c.vercel.app',  
+    'https://inovice-generator-react-dj3m-lrt0h3j8m.vercel.app', 
     
   ],
   methods: ['GET', 'POST'],
