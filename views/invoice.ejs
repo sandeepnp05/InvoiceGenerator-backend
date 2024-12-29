@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: white;
+            padding: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+      
+
+        .title-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .title-section h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .user-info {
+            background: #1F2937;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+        }
+
+        .user-info .name {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .user-info .email {
+            background: white;
+            color: black;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 14px;
+            position: absolute;
+            right: 24px;
+            top: 24px;
+        }
+
+        .user-info .date {
+            position: absolute;
+            right: 24px;
+            top: 0px;
+            padding: 4px 12px;
+           
+            color: white;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        thead {
+            background: linear-gradient(90deg, #1F2937 0%, #374151 50%, #065F46 100%);
+            color: white;
+            
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 20px;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .total-section {
+            background: #F9FAFB;
+            border-radius: 12px;
+            padding: 20px;
+            width: 300px;
+            margin-left: auto;
+            margin-top: 30px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            color: #374151;
+        }
+
+        .total-row.final {
+            border-top: 1px solid #E5E7EB;
+            margin-top: 8px;
+            padding-top: 12px;
+            font-weight: 600;
+        }
+
+        .total-row .amount {
+            color: #2563EB;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: #1F2937;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 50px;
+            margin-top: 40px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .product-name {
+            color: #4B5563;
+        }
+
+        .currency {
+            color: #6B7280;
+        }
+     
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <img src="/views/public/assets/logoInvoice.svg" alt="Logo" width="40" height="40"/>
+            
+        </div>
+        <div class="title-section">
+            <h1>INVOICE GENERATOR</h1>
+            
+        </div>
+    </div>
+
+    <div class="user-info">
+        <div class="name"><%= user.name %></div>
+        <div class="email"><%= user.email %></div>
+        <div class="date">Date: <%= new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }) %></div>
+    </div>
+
+    <table>
+        <thead class="product-head">
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(function(product) { %>
+                <tr>
+                    <td class="product-name"><%= product.productName %></td>
+                    <td><%= product.quantity %></td>
+                    <td class="currency">₹<%= product.price %></td>
+                    <td class="currency">₹<%= (product.price * product.quantity).toFixed(2) %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <div class="total-row">
+            <span>Total Charges</span>
+            <span class="currency">₹<%= subTotal.toFixed(2) %></span>
+        </div>
+        <div class="total-row">
+            <span>GST (18%)</span>
+            <span class="currency">₹<%= (total - subTotal).toFixed(2) %></span>
+        </div>
+        <div class="total-row final">
+            <span>Total Amount</span>
+            <span class="amount">₹<%= total.toFixed(2) %></span>
+        </div>
+    </div>
+
+    <div class="footer">
+        We are pleased to provide any further information you may require and look forward to assisting with
+        your next order. Rest assured, it will receive our prompt and dedicated attention.
+    </div>
+</body>
+</html>
