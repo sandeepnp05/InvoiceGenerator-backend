@@ -10,10 +10,14 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'https://invoice-generator-react-dj3m-fgchwc37c.vercel.app',
+    
+  ],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 app.use(express.static('public'));
 
