@@ -52,10 +52,14 @@ router.get("/generate-invoice", authMiddleware, async (req, res) => {
     const pdfDir = path.join(__dirname, "..", "pdfs");
     await fs.mkdir(pdfDir, { recursive: true });
 
-    // Launch Puppeteer
-    const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser'
+    browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',  
+        '--disable-gpu'             
+      ],
+      headless: 'new'              
     });
 
     const page = await browser.newPage();
